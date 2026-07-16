@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>バチカン使徒文書館 ─ Archivio Apostolico Vaticano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<meta name=”robots” content=”noindex”>
+<style>
+  :root{
+    --bg:#FBF5E9;
+    --card:#FFFFFF;
+    --ink:#2B2118;
+    --ink-soft:#7A6C59;
+    --coral:#EA5A3A;
+    --coral-dark:#C8431F;
+    --gold:#F3A93B;
+    --teal:#189489;
+    --lilac:#8C6FDB;
+    --ring:rgba(43,33,24,0.08);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'M PLUS Rounded 1c', sans-serif;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .lat{font-family:'Poppins', sans-serif;}
+
+  .wrap{max-width:960px; margin:0 auto; padding:0 24px 100px;}
+
+  /* ---------- decorative blobs ---------- */
+  .blob-field{position:relative; overflow:visible;}
+  .blob{position:absolute; border-radius:50%; filter:blur(2px); opacity:0.55; z-index:0;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:64px 0 42px;
+    text-align:center;
+    z-index:1;
+  }
+  .badge-row{
+    display:flex; justify-content:center; gap:10px; margin-bottom:26px; flex-wrap:wrap;
+  }
+  .badge{
+    display:inline-flex; align-items:center; gap:6px;
+    background:var(--card);
+    border:1.5px solid var(--ring);
+    border-radius:999px;
+    padding:8px 16px;
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--ink-soft);
+    box-shadow:0 3px 0 var(--ring);
+  }
+  .badge b{color:var(--coral);}
+  .badge .dot{width:6px; height:6px; border-radius:50%; background:var(--teal);}
+
+  .hero h1{
+    font-size:44px;
+    font-weight:800;
+    color:var(--ink);
+    letter-spacing:0.01em;
+    line-height:1.3;
+  }
+  .hero h1 .accent{color:var(--coral);}
+  .hero .latin{
+    font-family:'Poppins', sans-serif;
+    font-weight:600;
+    font-style:italic;
+    font-size:17px;
+    color:var(--teal);
+    margin-top:10px;
+  }
+  .hero .sub{
+    max-width:520px;
+    margin:24px auto 0;
+    font-size:14.5px;
+    color:var(--ink-soft);
+  }
+
+  .author-chip{
+    display:inline-flex; align-items:center; gap:8px;
+    margin-top:28px;
+    background:linear-gradient(135deg, var(--coral), var(--gold));
+    color:#fff;
+    padding:10px 22px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:13.5px;
+    box-shadow:0 4px 14px rgba(234,90,58,0.35);
+  }
+  .author-chip .fill{
+    display:inline-block;
+    min-width:120px;
+    border-bottom:2px dashed rgba(255,255,255,0.75);
+    height:1px;
+  }
+
+  .stamp{width:88px; height:88px; margin:36px auto 0;}
+
+  /* ---------- stat chips ---------- */
+  .stats{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px;
+    margin-top:12px;
+    position:relative;
+    z-index:1;
+  }
+  .stat-chip{
+    background:var(--card);
+    border-radius:20px;
+    padding:16px 22px;
+    min-width:118px;
+    text-align:center;
+    box-shadow:0 3px 0 var(--ring);
+  }
+  .stat-chip .num{
+    font-family:'Poppins', sans-serif;
+    font-weight:800;
+    font-size:26px;
+    display:block;
+  }
+  .stat-chip:nth-child(1) .num{color:var(--coral);}
+  .stat-chip:nth-child(2) .num{color:var(--teal);}
+  .stat-chip:nth-child(3) .num{color:var(--gold);}
+  .stat-chip:nth-child(4) .num{color:var(--lilac);}
+  .stat-chip .lbl{font-size:11.5px; color:var(--ink-soft); margin-top:4px;}
+
+  /* ---------- section heading ---------- */
+  .section{padding:80px 0 8px; position:relative; z-index:1;}
+  .eyebrow-tag{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:7px 16px;
+    border-radius:999px;
+    font-family:'Poppins', sans-serif;
+    font-weight:700;
+    font-size:12.5px;
+    color:#fff;
+    margin-bottom:18px;
+  }
+  .tag-coral{background:var(--coral);}
+  .tag-teal{background:var(--teal);}
+  .tag-gold{background:var(--gold);}
+  .tag-lilac{background:var(--lilac);}
+
+  .section h2{
+    font-size:26px;
+    font-weight:800;
+    margin-bottom:22px;
+  }
+
+  .lede{font-size:15px; color:var(--ink); max-width:680px; margin-bottom:14px;}
+
+  /* ---------- L'Archivio ---------- */
+  .archivio-body{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:40px;
+    margin-top:6px;
+  }
+  .archivio-body p{font-size:14.5px; color:var(--ink); margin-bottom:16px;}
+
+  .timeline-card{
+    background:var(--card);
+    border-radius:22px;
+    padding:24px 26px;
+    box-shadow:0 4px 0 var(--ring);
+  }
+  .tl-item{display:flex; gap:14px; padding-bottom:20px; position:relative;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item:not(:last-child)::after{
+    content:"";
+    position:absolute; left:15px; top:34px; bottom:0;
+    width:2px;
+    background:var(--ring);
+  }
+  .tl-dot{
+    flex:0 0 auto;
+    width:32px; height:32px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Poppins', sans-serif;
+    font-weight:800;
+    font-size:10.5px;
+    color:#fff;
+  }
+  .tl-item:nth-child(1) .tl-dot{background:var(--coral);}
+  .tl-item:nth-child(2) .tl-dot{background:var(--teal);}
+  .tl-item:nth-child(3) .tl-dot{background:var(--gold);}
+  .tl-year{font-family:'Poppins', sans-serif; font-weight:800; font-size:15px;}
+  .tl-text{font-size:12.5px; color:var(--ink-soft); margin-top:3px;}
+
+  /* ---------- shelf bar ---------- */
+  .shelf-wrap{margin:30px 0 4px;}
+  .shelf-label{display:flex; justify-content:space-between; font-size:12px; color:var(--ink-soft); margin-bottom:8px; font-weight:700;}
+  .shelf-bar{
+    height:26px; width:100%; border-radius:14px; overflow:hidden;
+    display:flex;
+  }
+  .shelf-bar div{flex:1; height:100%;}
+  .shelf-bar div:nth-child(4n+1){background:var(--coral);}
+  .shelf-bar div:nth-child(4n+2){background:var(--gold);}
+  .shelf-bar div:nth-child(4n+3){background:var(--teal);}
+  .shelf-bar div:nth-child(4n){background:var(--lilac);}
+  .shelf-caption{font-size:11.5px; color:var(--ink-soft); margin-top:10px;}
+
+  /* ---------- Attività cards ---------- */
+  .activity-intro{font-size:14.5px; margin-bottom:28px; max-width:680px;}
+  .activity-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:16px;
+  }
+  .act-card{
+    background:var(--card);
+    border-radius:22px;
+    padding:24px;
+    box-shadow:0 4px 0 var(--ring);
+  }
+  .act-card .icon-wrap{
+    width:44px; height:44px;
+    border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:14px;
+  }
+  .act-card:nth-child(1) .icon-wrap{background:rgba(234,90,58,0.14);}
+  .act-card:nth-child(2) .icon-wrap{background:rgba(24,148,137,0.14);}
+  .act-card:nth-child(3) .icon-wrap{background:rgba(243,169,59,0.16);}
+  .act-card:nth-child(4) .icon-wrap{background:rgba(140,111,219,0.14);}
+  .act-card h3{font-size:16px; font-weight:800; margin-bottom:2px;}
+  .act-card .en{
+    font-family:'Poppins', sans-serif;
+    font-size:11.5px; font-weight:600; font-style:italic;
+    color:var(--ink-soft); display:block; margin-bottom:10px;
+  }
+  .act-card p{font-size:13px; color:var(--ink-soft);}
+
+  /* ---------- Patrimonio tag cards ---------- */
+  .patrimonio-intro{display:flex; align-items:baseline; gap:12px; margin-bottom:26px;}
+  .patrimonio-intro .count{font-family:'Poppins', sans-serif; font-weight:800; font-size:24px; color:var(--coral);}
+  .patrimonio-intro .desc{font-size:13.5px; color:var(--ink-soft);}
+
+  .cat-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:14px;
+  }
+  .cat-card{
+    background:var(--card);
+    border-radius:20px;
+    padding:20px 22px;
+    box-shadow:0 4px 0 var(--ring);
+    border-top:5px solid var(--coral);
+  }
+  .cat-card:nth-child(2){border-top-color:var(--teal);}
+  .cat-card:nth-child(3){border-top-color:var(--gold);}
+  .cat-card:nth-child(4){border-top-color:var(--lilac);}
+  .cat-card:nth-child(5){border-top-color:var(--coral);}
+  .cat-card:nth-child(6){border-top-color:var(--teal);}
+  .cat-card .it{font-family:'Poppins', sans-serif; font-weight:600; font-style:italic; font-size:13.5px; color:var(--ink-soft);}
+  .cat-card .jp{font-size:16px; font-weight:800; margin:3px 0 8px;}
+  .cat-card .desc{font-size:12.5px; color:var(--ink-soft);}
+
+  /* ---------- Informazioni ---------- */
+  .info-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px;}
+  .info-card{
+    background:var(--card);
+    border-radius:20px;
+    padding:20px 22px;
+    box-shadow:0 4px 0 var(--ring);
+  }
+  .info-card .label{
+    font-family:'Poppins', sans-serif;
+    font-weight:700; font-size:11.5px;
+    color:var(--coral);
+    text-transform:uppercase; letter-spacing:0.04em;
+    margin-bottom:8px;
+  }
+  .info-card .value{font-size:13.5px; color:var(--ink);}
+  .info-card .value a{color:var(--teal); font-weight:700; text-decoration:none;}
+  .info-card .value a:hover{text-decoration:underline;}
+  .info-card .sub{font-size:11.5px; color:var(--ink-soft); margin-top:4px;}
+
+  /* ---------- Fonti ---------- */
+  .source-card{
+    background:var(--card);
+    border-radius:20px;
+    padding:22px 24px;
+    box-shadow:0 4px 0 var(--ring);
+    max-width:560px;
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .source-card .name{font-size:13.5px; font-weight:700;}
+  .source-card a{font-size:12.5px; color:var(--teal); font-weight:700; text-decoration:none; word-break:break-all;}
+  .source-card a:hover{text-decoration:underline;}
+
+  /* ---------- fonti (muted) ---------- */
+  .tag-muted{background:transparent; color:var(--ink-soft); border:1.3px solid var(--ring); padding:6px 14px;}
+  .muted-h2{font-size:19px; font-weight:700; color:var(--ink-soft); margin-bottom:14px;}
+  .lede-muted{font-size:13px; color:var(--ink-soft); max-width:640px; margin-bottom:14px;}
+  .source-card-muted{
+    text-align:left;
+    padding:14px 0 0;
+    border-top:1px solid var(--ring);
+    max-width:560px;
+    display:flex; flex-direction:column; gap:4px;
+  }
+  .source-card-muted .name{font-size:12.5px; color:var(--ink-soft); font-weight:600;}
+  .source-card-muted a{font-size:12px; color:var(--ink-soft); font-weight:500; text-decoration:underline; text-decoration-color:var(--ring); word-break:break-all;}
+  .source-card-muted a:hover{color:var(--teal);}
+
+  /* ---------- footer ---------- */
+  .colophon{
+    margin-top:80px;
+    padding-top:24px;
+    border-top:2px dashed var(--ring);
+    text-align:center;
+    font-family:'Poppins', sans-serif;
+    font-size:11.5px;
+    color:var(--ink-soft);
+    font-weight:600;
+  }
+
+  @media (max-width:720px){
+    .hero h1{font-size:32px;}
+    .archivio-body{grid-template-columns:1fr;}
+    .activity-grid{grid-template-columns:1fr;}
+    .cat-grid{grid-template-columns:1fr;}
+    .info-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap blob-field">
+
+  <svg class="blob" style="width:260px;height:260px;top:-60px;left:-90px;background:radial-gradient(circle,#F3A93B55,transparent 70%);"></svg>
+  <svg class="blob" style="width:220px;height:220px;top:20px;right:-70px;background:radial-gradient(circle,#18948955,transparent 70%);"></svg>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="badge-row">
+      <span class="badge"><span class="dot"></span> Città del Vaticano</span>
+      <span class="badge">建立 <b>1612</b></span>
+    </div>
+
+    <h1>バチカン使徒文書館</h1>
+    <div class="latin">Archivio Apostolico Vaticano</div>
+    <p class="sub">400年以上、教会の記録を守り続けてきたバチカン市国ベルヴェデーレの中庭にある、カトリック教会の公式文書館</p>
+
+    <div class="author-chip">✍️ 作成者：2691902　後藤知美　<span class="fill"></span></div>
+  </header>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stat-chip"><span class="num">1612</span><div class="lbl">設立年</div></div>
+    <div class="stat-chip"><span class="num">12</span><div class="lbl">世紀分の記録</div></div>
+    <div class="stat-chip"><span class="num">600+</span><div class="lbl">コレクション</div></div>
+    <div class="stat-chip"><span class="num">85km</span><div class="lbl">書棚の長さ</div></div>
+  </section>
+
+  <!-- L'ARCHIVIO -->
+  <section class="section" id="archivio">
+    <span class="eyebrow-tag tag-coral">L'Archivio · The Archives</span>
+    <h2>歴史的背景 📚</h2>
+
+    <div class="archivio-body">
+      <div>
+        <p>1612年、教皇パウルス5世の命によりバチカン図書館から独立して設立され、以来400年以上にわたって教会の記録を保存・管理をしてきた。</p>
+        <p>保存されている文書遺産はおよそ12世紀（8〜20世紀）に及び、600を超えるアーカイブコレクションで構成され、書棚の総延長は約85キロメートル以上に及ぶ。</p>
+        <p>1881年に学者に門戸を開放して以来、世界で最も重要かつ著名な歴史研究センターの一つとなっている。</p>
+      </div>
+
+      <div class="timeline-card">
+        <div class="tl-item">
+          <div class="tl-dot">1612</div>
+          <div>
+            <div class="tl-year">設立</div>
+            <div class="tl-text">教皇パウルス5世の命により、バチカン図書館から独立した文書館として誕生。</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">1881</div>
+          <div>
+            <div class="tl-year">一般公開</div>
+            <div class="tl-text">学者に門戸を開放し、世界的な歴史研究の拠点になっていく。</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot">2019</div>
+          <div>
+            <div class="tl-year">改称</div>
+            <div class="tl-text">フランシスコ教皇の命令で「秘密文書館」から現名称「使徒文書館」へ。「秘密」が誤解を生むための改称。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="shelf-wrap">
+      <div class="shelf-label"><span>書棚 約85km</span><span>ぜんぶ並べるとこの長さ！</span></div>
+      <div class="shelf-bar">
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+        <div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ATTIVITÀ -->
+  <section class="section" id="attivita">
+    <span class="eyebrow-tag tag-teal">Attività · Activity</span>
+    <h2>活動 🔎</h2>
+
+    <p class="activity-intro">職員の活動には、文書を物理的に長く保存すること、そして研究ツールを作って文書遺産の価値を高めることという２つの目的がある。</p>
+
+    <div class="activity-grid">
+      <div class="act-card">
+        <div class="icon-wrap"><svg width="22" height="22" viewBox="0 0 40 40"><path d="M8 6h24v28l-12-6-12 6z" fill="none" stroke="#EA5A3A" stroke-width="2.2" stroke-linejoin="round"/></svg></div>
+        <h3>出版物</h3>
+        <span class="en">Publications</span>
+        <p>「コレクタネア・アルキヴィ・バチカーニ」シリーズを刊行し、研究成果をみんなに共有。</p>
+      </div>
+
+      <div class="act-card">
+        <div class="icon-wrap"><svg width="22" height="22" viewBox="0 0 40 40"><path d="M20 5l13 6v9c0 9-6 15-13 16C13 35 7 29 7 20v-9z" fill="none" stroke="#189489" stroke-width="2.2" stroke-linejoin="round"/></svg></div>
+        <h3>保存と修復</h3>
+        <span class="en">Preservation</span>
+        <p>化学的・物理的・生物学的な劣化から文書を守り、印章の保存計画も研究中。</p>
+      </div>
+
+      <div class="act-card">
+        <div class="icon-wrap"><svg width="22" height="22" viewBox="0 0 40 40"><rect x="6" y="9" width="28" height="18" rx="3" fill="none" stroke="#F3A93B" stroke-width="2.2"/><line x1="14" y1="32" x2="26" y2="32" stroke="#F3A93B" stroke-width="2.2"/><line x1="20" y1="27" x2="20" y2="32" stroke="#F3A93B" stroke-width="2.2"/></svg></div>
+        <h3>デジタル取得</h3>
+        <span class="en">Digital acquisition</span>
+        <p>最古の文書と1,200点を超える索引・目録を、どんどんデジタル化。</p>
+      </div>
+
+      <div class="act-card">
+        <div class="icon-wrap"><svg width="22" height="22" viewBox="0 0 40 40"><circle cx="13" cy="15" r="5" fill="none" stroke="#8C6FDB" stroke-width="2.2"/><circle cx="27" cy="15" r="5" fill="none" stroke="#8C6FDB" stroke-width="2.2"/><path d="M5 33c1-6 6-9 8-9s3 1 5 1 3-1 5-1 7 3 8 9" fill="none" stroke="#8C6FDB" stroke-width="2.2"/></svg></div>
+        <h3>プロジェクト</h3>
+        <span class="en">Collaborative projects</span>
+        <p>目録作成・原典版制作・修復・デジタル化に関心のある団体や企業との共同事業。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATRIMONIO -->
+  <section class="section" id="patrimonio">
+    <span class="eyebrow-tag tag-gold">Patrimonio · Heritage</span>
+    <h2>遺産 🗝️</h2>
+
+    <div class="patrimonio-intro">
+      <span class="count">600+</span>
+      <span class="desc">所蔵資料は、以下のカテゴリーに分かれている。</span>
+    </div>
+
+    <div class="cat-grid">
+      <div class="cat-card">
+        <div class="it">Offices of the Curia</div>
+        <div class="jp">教皇事務所</div>
+        <div class="desc">最も古い機関、および枢密院の歴史的記録。現存する諸機関の記録も含む。</div>
+      </div>
+      <div class="cat-card">
+        <div class="it">Papal diplomatic</div>
+        <div class="jp">教皇の外交使節</div>
+        <div class="desc">16〜20世紀、世界各地にあった75を超える外交使節団の歴史的文書。</div>
+      </div>
+      <div class="cat-card">
+        <div class="it">Families and individuals</div>
+        <div class="jp">家族と個人</div>
+        <div class="desc">教皇領と結びついた貴族の文書や、バチカンに届いた個人に関する文書。</div>
+      </div>
+      <div class="cat-card">
+        <div class="it">Councils and synods</div>
+        <div class="jp">評議会と教会会議</div>
+        <div class="desc">公会議・地方会議・全体会議・地方教会会議の記録。</div>
+      </div>
+      <div class="cat-card">
+        <div class="it">Religious institutes &amp; orders</div>
+        <div class="jp">修道会・宗教団体</div>
+        <div class="desc">修道院やローマの主要信心会に関するアーカイブズ。</div>
+      </div>
+      <div class="cat-card">
+        <div class="it">Miscellaneous collections</div>
+        <div class="jp">その他のコレクション</div>
+        <div class="desc">古いアーカイブズの整理基準に基づいて作られたコレクションなど。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFORMAZIONI -->
+  <section class="section" id="informazioni">
+    <span class="eyebrow-tag tag-lilac">Informazioni · Basic Info</span>
+    <h2>基本情報 📍</h2>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="label">所在地</div>
+        <div class="value">Cortile del Belvedere, 00120 Città del Vaticano</div>
+        <div class="sub">ベルヴェデーレの中庭、バチカン市国</div>
+      </div>
+      <div class="info-card">
+        <div class="label">開館時間</div>
+        <div class="value">月・火：8:00〜16:15<br>水〜金：8:00〜12:45</div>
+        <div class="sub">土・日曜、祝日は休館</div>
+      </div>
+      <div class="info-card">
+        <div class="label">連絡先</div>
+        <div class="value">Tel. +39 06 6988 3314 / +39 06 6988 3211<br>Email archivio@aav.va</div>
+      </div>
+      <div class="info-card">
+        <div class="label">公式サイト</div>
+        <div class="value"><a href="https://www.archivioapostolicovaticano.va/content/aav/it.html" target="_blank" rel="noopener">archivioapostolicovaticano.va</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FONTI -->
+  <section class="section" id="fonti">
+    <span class="eyebrow-tag tag-muted">Fonti · Sources</span>
+    <h2 class="muted-h2">出典</h2>
+    <p class="lede-muted">このレポートは、バチカン使徒文書館の公式サイトの内容をもとに作成しました。</p>
+    <div class="source-card-muted">
+      <span class="name">Archivio Apostolico Vaticano — Sito ufficiale</span>
+      <a href="https://www.archivioapostolicovaticano.va/content/aav/it.html" target="_blank" rel="noopener">https://www.archivioapostolicovaticano.va/content/aav/it.html</a>
+    </div>
+  </section>
+
+  <footer class="colophon">Archivio Apostolico Vaticano ／ Cortile del Belvedere, Città del Vaticano</footer>
+
+</div>
+</body>
+</html>
